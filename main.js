@@ -21,7 +21,7 @@ const config = {
 const VELOCITY = 200;
 
 let bird = null;
-
+let m = null;
 let upperPipe = null;
 let lowerPipe = null;
 
