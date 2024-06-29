@@ -15,13 +15,6 @@ class PlayScene extends Phaser.Scene {
     this.flapVelocity = 300;
   }
 
-  preload() {
-    this.load.image("sky", "./assets/sky.png");
-    this.load.image("bird", "./assets/bird.png");
-    this.load.image("pipe", "./assets/pipe.png");
-    this.load.image("pause", "./assets/pause.png");
-  }
-
   create() {
     this.createBG();
     this.createBird();
@@ -100,6 +93,7 @@ class PlayScene extends Phaser.Scene {
       .setOrigin(1);
 
     pauseButton.on("pointerdown", () => {
+      this.physics.pause();
       this.scene.pause();
     });
   }
