@@ -1,10 +1,10 @@
-import Phaser from "phaser";
+import BaseScene from "./BaseScene";
 
 const PIPES_TO_RENDER = 4;
 
-class PlayScene extends Phaser.Scene {
+class PlayScene extends BaseScene {
   constructor(config) {
-    super("PlayScene");
+    super("PlayScene", config);
     this.config = config;
     this.bird = null;
     this.pipes = null;
@@ -16,6 +16,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    super.create();
     this.createBG();
     this.createBird();
     this.createPipes();
