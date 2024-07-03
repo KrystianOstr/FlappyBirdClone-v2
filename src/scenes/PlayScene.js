@@ -24,6 +24,7 @@ class PlayScene extends BaseScene {
     this.createScore();
     this.createPause();
     this.handleInputs();
+    this.listenToEvents();
   }
 
   update() {
@@ -32,6 +33,35 @@ class PlayScene extends BaseScene {
     this.recyclePipes();
   }
 
+  listenToEvents() {
+    if (this.pauseEvent) return;
+    this.pauseEvent = this.events.on("resume", () => {
+      this.initialTime = 3;
+      this.countDownText = this.add
+        .text(
+          ...this.screenCenter,
+          `Fly in: ${this.initialTime}`,
+          this.fontOptions
+        )
+        .setOrigin(0.5);
+      this.timedEvent = this.time.addEvent({
+        delay: 1000,
+        callback: this.countDown,
+        callbackScope: this,
+        loop: true,
+      });
+    });
+  }
+
+  countDown() {
+    this.initialTime--;
+    this.countDownText.setText(`Fly in: ${this.initialTime}`);
+    if (this.initialTime <= 0) {
+      this.countDownText.setText("");
+      this.physics.resume();
+      this.timedEvent.remove();
+    }
+  }
   createBG() {
     this.add.image(0, 0, "sky").setOrigin(0);
   }
@@ -96,6 +126,7 @@ class PlayScene extends BaseScene {
     pauseButton.on("pointerdown", () => {
       this.physics.pause();
       this.scene.pause();
+      this.scene.launch("PauseScene");
     });
   }
 
